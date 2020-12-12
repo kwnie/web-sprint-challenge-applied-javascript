@@ -15,7 +15,7 @@ axios.get('https://lambda-times-api.herokuapp.com/topics')
 .then(object => {
     let data = object["data"]["topics"];
     data.forEach(topic => {
-        function tabMaker({data}){
+        function tabMaker(){
             let tab = document.createElement('div')
             tab.classList.add('tab')
             tab.textContent = topic
