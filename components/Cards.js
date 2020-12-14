@@ -26,8 +26,8 @@ import axios from 'axios'
 axios.get('https://lambda-times-api.herokuapp.com/articles')
 .then(object => {
     let data = object["data"]["articles"]
-    console.log(data)
-    function articleMaker({data}){
+    //console.log(data)
+    function articleMaker(data){
         let card = document.createElement('div')
         let headline = document.createElement('div')
         let author = document.createElement('div')
@@ -46,22 +46,25 @@ axios.get('https://lambda-times-api.herokuapp.com/articles')
         author.classList.add('author')
         imgContainer.classList.add('img-container')
 
-    
-        for (const prop in data) {
-            for (const obj in prop) {
-                let title = headline.textContent = data[prop][obj][2]
-                img.src = data[prop][obj][1]
-                authorName.textContent = data[prop][obj][0]
-                card.addEventListener('click', function(){
+        let data1 = Object.entries(data)
+        //console.log(data1)
+        data1.forEach(array => {
+            let data2 = array[1]
+            //console.log(data2)
+            data2.forEach(obj => {
+                let title = headline.textContent = obj.authorName
+                img.src = obj.authorPhoto
+                authorName.textContent = obj.authorName
+                card.addEventListener('click', e => {
                     console.log(title)
                 })
-            } 
-        } 
-
+            })
+        })
+      
         return card
     }
-
-    let newCard = articleMaker({data})
+        
+    let newCard = articleMaker(data)
     let cardsContainer = document.querySelector('div.cards-container')
     cardsContainer.appendChild(newCard)
 })
